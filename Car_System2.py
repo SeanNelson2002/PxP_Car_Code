@@ -16,6 +16,7 @@ import busio#used for bus operations
 import adafruit_vl6180x#time of flight distance sensor
 from math import trunc#used for truncating data
 import IMU#Import IMU for actiavting outside modules
+from subprocess import call#Shutoff button
 # Sets up Broadcast connection
 client_socket = socket(AF_INET, SOCK_DGRAM)
 client_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
@@ -255,6 +256,13 @@ lux = 100
 clocktime=time.time()
 # While loop starts program and starts producing results
 while True:
+    # Use PIN 26 to activate shutoff command
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    shutoff_button = GPIO.input(26)
+    if shutoff_button == False:
+        call("sudo nohup shutdown -h now", shell=True)
+        time.sleep(0.2)
     # try to make a call to the board otherwise set everything to 0
     try:
         b1 = bus.read_i2c_block_data(0x77, 0x88, 24)
