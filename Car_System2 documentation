@@ -1,0 +1,45 @@
+Import Socket module for Broadcasting
+Import system module for normal system functions
+Import loggin module for logging data
+Import os module for Operating System functions
+Import subprocess module for CPU processing functions
+Import platform module because it corresponds to IMU module
+Import re module because it also corresponds to IMU moudle
+Import time module for calculating while loop process times
+Import math module for mathematical calculations
+Import datetime module to get time zone DateTime data
+Import RPi.GPIO module for enabling GPIO pins on the raspberry Pi 3b+
+Import smbus module to access smbus functionality
+Import serial module to get serial data from GPIO pins
+Import board module to get board functionalities
+Import adafruit_vl6180x module to activate and get data from the Adafruit vl8180x time of flight distance sensor
+From math module import trunc specifically to for truncating numerical data
+Import IMU for activating the gyroscope sensor module
+Set up Broadcasting connection using "255.255.255.255" as ip address and "7777" as port number
+Setup the Gyroscope method returning results with tilt and pitch deg.
+Gyroscope method consists of calling both the kalmanFilterY and kalmanFilterX to clean up data
+Setup GPS parsing method to parse raw data from the GPS data passed through as a parameter
+For the coordinates, setup a decode method to return integer from a concatenated string of parsed data
+Activate the smbus module
+Create a variable in boolean for knowing if the lights on the vehical are on/off
+Create a default variable as a integer set to 100 for LUX (Lumenosity Index)
+Create a variable with the results of current time called from the time module (Used for battery calculations)
+Create a endless while loop to endlessly stream and get data from sensors, etc.
+Read I2C bus block data
+Calculate the bits returned from the I2C bus data
+Try to write back the byte data produced to the bus
+Then read I2C bus block data again
+Using this I2C bus block data calculate the C Temp, F Temp, Barometric Pressure, and Altitude
+Read INA219 data (INA219 is a voltage sensor soldered onto the board)
+Using the INA219 data get Bus Voltage, Bus Current, Bus Power, Shunt Voltage, and Supply Voltage
+Using the Serial module start getting GPS data
+Using the GPS data get satelite count and coordinates
+Setup and activate time of flight sensor and configure it as a light sensor
+The light sensor then provides lux readings with a Gain of 1x
+Read tilt and pitch data
+If lux is below 25 then turn on headlights with a solid glow
+if tilt is greater than 25 degrees both directions then turn on and off headlights at a rapid pace
+Open battery level file to get current battery level
+If voltage is greater than 7.35V then using the loop process time and current voltage readings, increase battery level inside the battery level text file.
+Create a string based data packet variable containing all of the processed information in python
+Broadcast the data packet information encoded in bytes to carry stream to the Java GUI on a different machine
